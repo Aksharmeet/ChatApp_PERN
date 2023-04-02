@@ -19,8 +19,9 @@ function Login() {
 				password: Yup.string().min(8, 'Must be 8 characters or more').max(20, 'Must be 20 characters or less').required('Required'),
 			})}
 			onSubmit={(values, actions) => {
-				const { username, password } = values
+				const { ...vals } = values
 				actions.resetForm()
+				console.log(vals, 'vals')
 
 				fetch('http://localhost:4000/auth/login', {
 					method: 'POST',
@@ -28,7 +29,7 @@ function Login() {
 					headers: {
 						'Content-Type': 'application/json',
 					},
-					body: JSON.stringify({ username, password }),
+					body: JSON.stringify(vals),
 				})
 					.catch((err) => {
 						return
@@ -41,14 +42,14 @@ function Login() {
 					})
 					.then((data) => {
 						if (!data) return
-						console.log(data)
+						// console.log(data)
 					})
 			}}
 		>
 			<VStack as={Form} w={{ base: '90%', md: '500px' }} m='auto' justify='center' h='100vh' spacing='1em'>
 				<Heading>Log In</Heading>
 				<TextField name='username' placeholder='Enter Username' autcomplete='off' label='Username' />
-				<TextField name='password' placeholder='Enter Password' autcomplete='off' label='Password' />
+				<TextField type='password' name='password' placeholder='Enter Password' autcomplete='off' label='Password' />
 				<ButtonGroup>
 					<Button onClick={() => navigate('/register')}>Create Account</Button>
 					<Button colorScheme='teal' type='submit'>

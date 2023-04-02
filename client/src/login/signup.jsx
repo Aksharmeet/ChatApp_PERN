@@ -49,7 +49,7 @@ function Signup() {
 			<VStack as={Form} w={{ base: '90%', md: '500px' }} m='auto' justify='center' h='100vh' spacing='1em'>
 				<Heading>Sign Up</Heading>
 				<TextField name='username' placeholder='Enter Username' autcomplete='off' label='Username' />
-				<TextField name='password' placeholder='Enter Password' autcomplete='off' label='Password' />
+				<TextField name='password' type='password' placeholder='Enter Password' autcomplete='off' label='Password' />
 				<ButtonGroup>
 					<Button onClick={() => navigate('/')} leftIcon={<ArrowBackIcon />}>
 						Back
