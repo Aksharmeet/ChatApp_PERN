@@ -19,8 +19,30 @@ function Login() {
 				password: Yup.string().min(8, 'Must be 8 characters or more').max(20, 'Must be 20 characters or less').required('Required'),
 			})}
 			onSubmit={(values, actions) => {
-				alert(JSON.stringify(values, null, 2))
+				const { username, password } = values
 				actions.resetForm()
+
+				fetch('http://localhost:4000/auth/login', {
+					method: 'POST',
+					credentials: 'include',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ username, password }),
+				})
+					.catch((err) => {
+						return
+					})
+					.then((res) => {
+						if (!res || !res.ok || res.status >= 400) {
+							return
+						}
+						return res.json()
+					})
+					.then((data) => {
+						if (!data) return
+						console.log(data)
+					})
 			}}
 		>
 			<VStack as={Form} w={{ base: '90%', md: '500px' }} m='auto' justify='center' h='100vh' spacing='1em'>
